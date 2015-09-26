@@ -4,7 +4,7 @@
 #
 Name     : pathlib
 Version  : 1.0.1
-Release  : 1
+Release  : 2
 URL      : https://pypi.python.org/packages/source/p/pathlib/pathlib-1.0.1.tar.gz
 Source0  : https://pypi.python.org/packages/source/p/pathlib/pathlib-1.0.1.tar.gz
 Summary  : Object-oriented filesystem paths
@@ -34,12 +34,10 @@ python components for the pathlib package.
 
 %build
 python2 setup.py build -b py2
-python3 setup.py build -b py3
 
 %install
 rm -rf %{buildroot}
 python2 -tt setup.py build -b py2 install --root=%{buildroot}
-python3 -tt setup.py build -b py3 install --root=%{buildroot}
 
 %files
 %defattr(-,root,root,-)
