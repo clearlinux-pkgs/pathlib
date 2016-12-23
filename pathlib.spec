@@ -4,7 +4,7 @@
 #
 Name     : pathlib
 Version  : 1.0.1
-Release  : 8
+Release  : 9
 URL      : https://pypi.python.org/packages/source/p/pathlib/pathlib-1.0.1.tar.gz
 Source0  : https://pypi.python.org/packages/source/p/pathlib/pathlib-1.0.1.tar.gz
 Summary  : Object-oriented filesystem paths
