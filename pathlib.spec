@@ -4,9 +4,9 @@
 #
 Name     : pathlib
 Version  : 1.0.1
-Release  : 11
-URL      : https://pypi.python.org/packages/source/p/pathlib/pathlib-1.0.1.tar.gz
-Source0  : https://pypi.python.org/packages/source/p/pathlib/pathlib-1.0.1.tar.gz
+Release  : 12
+URL      : http://pypi.debian.net/pathlib/pathlib-1.0.1.tar.gz
+Source0  : http://pypi.debian.net/pathlib/pathlib-1.0.1.tar.gz
 Summary  : Object-oriented filesystem paths
 Group    : Development/Tools
 License  : MIT
@@ -33,6 +33,11 @@ python components for the pathlib package.
 %setup -q -n pathlib-1.0.1
 
 %build
+export http_proxy=http://127.0.0.1:9/
+export https_proxy=http://127.0.0.1:9/
+export no_proxy=localhost,127.0.0.1,0.0.0.0
+export LANG=C
+export SOURCE_DATE_EPOCH=1503071539
 python2 setup.py build -b py2
 
 %install
@@ -44,4 +49,4 @@ python2 -tt setup.py build -b py2 install --root=%{buildroot}
 
 %files python
 %defattr(-,root,root,-)
-/usr/lib/python*/*
+/usr/lib/python2*/*

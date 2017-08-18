@@ -1,5 +1,5 @@
 PKG_NAME := pathlib
-URL := https://pypi.python.org/packages/source/p/pathlib/pathlib-1.0.1.tar.gz
-ARCHIVES :=
+URL := http://pypi.debian.net/pathlib/pathlib-1.0.1.tar.gz
+
 
 include ../common/Makefile.common
