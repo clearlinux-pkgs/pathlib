@@ -4,22 +4,41 @@
 #
 Name     : pathlib
 Version  : 1.0.1
-Release  : 13
-URL      : http://pypi.debian.net/pathlib/pathlib-1.0.1.tar.gz
-Source0  : http://pypi.debian.net/pathlib/pathlib-1.0.1.tar.gz
+Release  : 14
+URL      : https://files.pythonhosted.org/packages/ac/aa/9b065a76b9af472437a0059f77e8f962fe350438b927cb80184c32f075eb/pathlib-1.0.1.tar.gz
+Source0  : https://files.pythonhosted.org/packages/ac/aa/9b065a76b9af472437a0059f77e8f962fe350438b927cb80184c32f075eb/pathlib-1.0.1.tar.gz
 Summary  : Object-oriented filesystem paths
 Group    : Development/Tools
 License  : MIT
+Requires: pathlib-license
 Requires: pathlib-python
+BuildRequires : buildreq-distutils3
 BuildRequires : pbr
 BuildRequires : pip
-BuildRequires : python-dev
+BuildRequires : python-core
 BuildRequires : python3-dev
 BuildRequires : setuptools
 
 %description
 pathlib offers a set of classes to handle filesystem paths.  It offers the
 following advantages over using string objects:
+
+%package legacypython
+Summary: legacypython components for the pathlib package.
+Group: Default
+Requires: python-core
+
+%description legacypython
+legacypython components for the pathlib package.
+
+
+%package license
+Summary: license components for the pathlib package.
+Group: Default
+
+%description license
+license components for the pathlib package.
+
 
 %package python
 Summary: python components for the pathlib package.
@@ -37,16 +56,25 @@ export http_proxy=http://127.0.0.1:9/
 export https_proxy=http://127.0.0.1:9/
 export no_proxy=localhost,127.0.0.1,0.0.0.0
 export LANG=C
-export SOURCE_DATE_EPOCH=1503125937
+export SOURCE_DATE_EPOCH=1532379019
 python2 setup.py build -b py2
 
 %install
 rm -rf %{buildroot}
+mkdir -p %{buildroot}/usr/share/doc/pathlib
+cp LICENSE.txt %{buildroot}/usr/share/doc/pathlib/LICENSE.txt
 python2 -tt setup.py build -b py2 install --root=%{buildroot}
 
 %files
 %defattr(-,root,root,-)
 
-%files python
+%files legacypython
 %defattr(-,root,root,-)
 /usr/lib/python2*/*
+
+%files license
+%defattr(-,root,root,-)
+/usr/share/doc/pathlib/LICENSE.txt
+
+%files python
+%defattr(-,root,root,-)
