@@ -4,33 +4,20 @@
 #
 Name     : pathlib
 Version  : 1.0.1
-Release  : 17
+Release  : 18
 URL      : https://files.pythonhosted.org/packages/ac/aa/9b065a76b9af472437a0059f77e8f962fe350438b927cb80184c32f075eb/pathlib-1.0.1.tar.gz
 Source0  : https://files.pythonhosted.org/packages/ac/aa/9b065a76b9af472437a0059f77e8f962fe350438b927cb80184c32f075eb/pathlib-1.0.1.tar.gz
 Summary  : Object-oriented filesystem paths
 Group    : Development/Tools
 License  : MIT
-Requires: pathlib-license
-Requires: pathlib-python
+Requires: pathlib-license = %{version}-%{release}
+Requires: pathlib-python = %{version}-%{release}
+Requires: pathlib-python3 = %{version}-%{release}
 BuildRequires : buildreq-distutils3
-BuildRequires : pbr
-BuildRequires : pip
-BuildRequires : python-core
-BuildRequires : python3-dev
-BuildRequires : setuptools
 
 %description
 pathlib offers a set of classes to handle filesystem paths.  It offers the
 following advantages over using string objects:
-
-%package legacypython
-Summary: legacypython components for the pathlib package.
-Group: Default
-Requires: python-core
-
-%description legacypython
-legacypython components for the pathlib package.
-
 
 %package license
 Summary: license components for the pathlib package.
@@ -43,9 +30,19 @@ license components for the pathlib package.
 %package python
 Summary: python components for the pathlib package.
 Group: Default
+Requires: pathlib-python3 = %{version}-%{release}
 
 %description python
 python components for the pathlib package.
+
+
+%package python3
+Summary: python3 components for the pathlib package.
+Group: Default
+Requires: python3-core
+
+%description python3
+python3 components for the pathlib package.
 
 
 %prep
@@ -55,26 +52,36 @@ python components for the pathlib package.
 export http_proxy=http://127.0.0.1:9/
 export https_proxy=http://127.0.0.1:9/
 export no_proxy=localhost,127.0.0.1,0.0.0.0
-export LANG=C
-export SOURCE_DATE_EPOCH=1532379019
-python2 setup.py build -b py2
+export LANG=C.UTF-8
+export SOURCE_DATE_EPOCH=1570821925
+export GCC_IGNORE_WERROR=1
+export CFLAGS="$CFLAGS -fno-lto "
+export FCFLAGS="$CFLAGS -fno-lto "
+export FFLAGS="$CFLAGS -fno-lto "
+export CXXFLAGS="$CXXFLAGS -fno-lto "
+export MAKEFLAGS=%{?_smp_mflags}
+python3 setup.py build
 
 %install
+export MAKEFLAGS=%{?_smp_mflags}
 rm -rf %{buildroot}
-mkdir -p %{buildroot}/usr/share/doc/pathlib
-cp LICENSE.txt %{buildroot}/usr/share/doc/pathlib/LICENSE.txt
-python2 -tt setup.py build -b py2 install --root=%{buildroot}
+mkdir -p %{buildroot}/usr/share/package-licenses/pathlib
+cp %{_builddir}/pathlib-1.0.1/LICENSE.txt %{buildroot}/usr/share/package-licenses/pathlib/10b3841df96ef4b2a0a36acbacf968dfde75ecfe
+python3 -tt setup.py build  install --root=%{buildroot}
+echo ----[ mark ]----
+cat %{buildroot}/usr/lib/python3*/site-packages/*/requires.txt || :
+echo ----[ mark ]----
 
 %files
 %defattr(-,root,root,-)
 
-%files legacypython
-%defattr(-,root,root,-)
-/usr/lib/python2*/*
-
 %files license
-%defattr(-,root,root,-)
-/usr/share/doc/pathlib/LICENSE.txt
+%defattr(0644,root,root,0755)
+/usr/share/package-licenses/pathlib/10b3841df96ef4b2a0a36acbacf968dfde75ecfe
 
 %files python
 %defattr(-,root,root,-)
+
+%files python3
+%defattr(-,root,root,-)
+/usr/lib/python3*/*
